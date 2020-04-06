@@ -9,7 +9,7 @@ namespace BannerlordHardmode
 {
     public class SubModule : MBSubModuleBase
     {
-        public static readonly string ModuleName = "WhyYouHardBro";
+        public static readonly string ModuleName = "BannerlordHardmode";
         private bool _isLoaded;
 
         protected override void OnSubModuleLoad()
@@ -23,7 +23,7 @@ namespace BannerlordHardmode
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error starting WhyYouHardBro:\n\n{ex.ToString()}");
+                MessageBox.Show($"Error starting BannerlordHardmode:\n\n{ex.ToString()}");
             }
         }
 
@@ -32,7 +32,7 @@ namespace BannerlordHardmode
             if (this._isLoaded)
                 return;
             base.OnBeforeInitialModuleScreenSetAsRoot();
-            InformationManager.DisplayMessage(new InformationMessage("Why You Hard Bro?", Color.White));
+            InformationManager.DisplayMessage(new InformationMessage("BannerlordHardmode loaded", Color.White));
             this._isLoaded = true;
         }
     }

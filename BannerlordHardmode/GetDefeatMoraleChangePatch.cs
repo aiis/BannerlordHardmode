@@ -23,7 +23,7 @@ namespace BannerlordHardmode
             }
             catch(Exception ex)
             {
-                MessageBox.Show($"FUCKAn error occurred during GetDefeatMoraleChangePatch\n\nException:\n{ex.ToString()}\n\n{ex.InnerException?.Message}\n\n{ex.InnerException?.InnerException?.Message}");
+                MessageBox.Show($"An error occurred during GetDefeatMoraleChangePatch\n\nException:\n{ex.ToString()}\n\n{ex.InnerException?.Message}\n\n{ex.InnerException?.InnerException?.Message}");
             }
             return !patched;
         }
