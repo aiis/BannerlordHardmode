@@ -12,7 +12,7 @@ This mod is an intro for me to Bannerlord modding with [Harmony](https://github.
 * Increased threshold of troop desertion (25 instead of 10)
 
 ### Installation
-1. Download zBannerlordHardmode.zip located in the build folder
+1. Download [zBannerlordHardmode.zip](https://github.com/aiis/BannerlordHardmode/blob/master/build/zBannerlordHardmode.zip) located in the build folder
 2. Unzip file
 3. Drag contents to *YourMountAndBladeInstallation*/Modules folder
 4. Enable in launcher
