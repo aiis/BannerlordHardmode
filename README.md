@@ -1,6 +1,6 @@
 # A Simple Hardmode for Bannerlord
 
-This mod is an intro for me to Bannerlord modding
+This is a simple balancing mod intended to make the game Bannerlord more challenging.
 
 ### Changes to base game
 * Increased damage player takes (2x the dmg of default realistic setting)
