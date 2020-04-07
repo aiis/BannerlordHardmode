@@ -2,14 +2,16 @@
 
 This mod is an intro for me to Bannerlord modding with [Harmony](https://github.com/pardeike/Harmony).
 
-### Changes
+### Changes to base game
 * Increased damage player takes (2x the dmg of default realistic setting)
-* Increased player's troops wages  (5x)
-* Increased food consumption for player's party (x2.5)
+* Increased player's troops wages  (5x in party; 3x garrisoned)
+* Increased food consumption for player's party (2.5x)
 * Halved food consumption for player's party when in a village, castle or town
 * Increased morale loss from defeats for player's party (-30 instead of -20)
 * Decreased base morale for player's party (30 instead of 50)
 * Increased threshold of troop desertion (25 instead of 10)
+* Reworked tax system (towns are even better than castles)
+* Workshop income decreased (0.6x)
 
 ### Installation
 1. Download [zBannerlordHardmode.zip](https://github.com/aiis/BannerlordHardmode/blob/master/build/zBannerlordHardmode.zip) located in the build folder

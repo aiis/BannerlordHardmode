@@ -7,7 +7,7 @@ namespace BannerlordHardmode
 {
     class HardmodeMobilePartyFoodConsumptionModel : DefaultMobilePartyFoodConsumptionModel
     {
-        private static readonly TextObject _partyConsumption = new TextObject("{=UrFzdy4z}Daily Consumption", (Dictionary<string, TextObject>)null);
+        private static readonly TextObject _partyConsumption = new TextObject("Daily Consumption", (Dictionary<string, TextObject>)null);
         public override float CalculateDailyFoodConsumptionf(MobileParty party, StatExplainer explainer = null)
         {
             float menFedPerFood = (party.IsMainParty ? 8.0f : 20f);

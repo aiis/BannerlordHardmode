@@ -57,7 +57,8 @@ namespace BannerlordHardmode
                 gameStarter.AddModel(new HardmodeDifficultyModel());
                 gameStarter.AddModel(new HardmodePartyMoraleModel());
                 gameStarter.AddModel(new HardmodeMobilePartyFoodConsumptionModel());
-                gameStarter.AddModel(new HardmodePartyWageModel());
+                //gameStarter.AddModel(new HardmodePartyWageModel());
+                gameStarter.AddModel(new HardmodeClanFinanceModel());
             }
         }
     }

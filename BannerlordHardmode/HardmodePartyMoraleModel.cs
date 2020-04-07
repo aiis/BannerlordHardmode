@@ -87,7 +87,7 @@ namespace BannerlordHardmode
 
         public override int GetTroopDesertionThreshold(MobileParty party)
         {
-            return 25;
+            return party.IsMainParty ? 25 : 10;
         }
 
         public override float GetDefeatMoraleChange(PartyBase party)
@@ -101,7 +101,16 @@ namespace BannerlordHardmode
 
         public override float GetEffectivePartyMorale(MobileParty mobileParty, StatExplainer explanation = null)
         {
-            ExplainedNumber explainedNumber = new ExplainedNumber(30f, explanation, (TextObject)null); // Changed from 50f to 30f
+            ExplainedNumber explainedNumber;
+            if (mobileParty.IsMainParty)
+            {
+                explainedNumber = new ExplainedNumber(30f, explanation, (TextObject)null); // Changed from 50f to 30f
+            }
+            else
+            {
+                explainedNumber = new ExplainedNumber(50f, explanation, (TextObject)null);
+            }
+            
             explainedNumber.Add(mobileParty.RecentEventsMorale, this._recentEventsText);
             this.GetMoraleEffectsFromSkill(mobileParty, ref explainedNumber);
             if (mobileParty.Party.IsStarving)

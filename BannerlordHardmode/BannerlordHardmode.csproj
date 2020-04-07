@@ -66,11 +66,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplyRewardsAndChangesPatch.cs" />
+    <Compile Include="HardmodeClanFinanceModel.cs" />
     <Compile Include="HardmodeDifficultyModel.cs" />
     <Compile Include="HardmodeMobilePartyFoodConsumptionModel.cs" />
     <Compile Include="HardmodePartyMoraleModel.cs" />
-    <Compile Include="HardmodePartyWageModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Submodule.cs" />
   </ItemGroup>
