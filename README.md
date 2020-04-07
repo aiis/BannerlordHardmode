@@ -1,6 +1,6 @@
 # A Simple Hardmode for Bannerlord
 
-This mod is an intro for me to Bannerlord modding with [Harmony](https://github.com/pardeike/Harmony).
+This mod is an intro for me to Bannerlord modding
 
 ### Changes to base game
 * Increased damage player takes (2x the dmg of default realistic setting)
