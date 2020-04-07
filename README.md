@@ -14,7 +14,7 @@ This is a simple balancing mod intended to make the game Bannerlord more challen
 * Workshop income decreased (0.6x)
 
 ### Installation
-1. Download zBannerlordHardmode.zip from [Releases](https://github.com/aiis/BannerlordHardmode/releases)
+1. Download zBannerlordHardmode.zip from [**Releases**](https://github.com/aiis/BannerlordHardmode/releases)
 2. Unzip file
 3. Drag contents to *YourMountAndBladeInstallation*/Modules folder
 4. Enable in launcher
