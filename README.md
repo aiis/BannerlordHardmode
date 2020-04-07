@@ -17,7 +17,7 @@ This mod is an intro for me to Bannerlord modding with [Harmony](https://github.
 3. Drag contents to *YourMountAndBladeInstallation*/Modules folder
 4. Enable in launcher
 
-##### Note: If you have problems launching, you can try unblocking the dll file of the mod.
+#### If you have problems launching, you can try unblocking the dll file of the mod.
 1. Navigate to *YourMountAndBladeInstallation*/Modules/zBannerlordHardmode/bin/Win64_Shipping_Client
 2. Right click BannerLordHardmode.dll and select properties
 3. At the very bottom of the window, check Unblock if it appears.
