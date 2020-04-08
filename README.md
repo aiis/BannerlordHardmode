@@ -12,6 +12,7 @@ This is a simple balancing mod intended to make the game Bannerlord more challen
 * Increased threshold of troop desertion (25 instead of 10)
 * Reworked tax system (towns are even better than castles)
 * Workshop income decreased (0.6x)
+* Bigger looter and bandit parties
 
 ### Installation
 1. Download zBannerlordHardmode.zip from [**Releases**](https://github.com/aiis/BannerlordHardmode/releases)
