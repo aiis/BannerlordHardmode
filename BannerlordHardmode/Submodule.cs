@@ -43,11 +43,17 @@ namespace BannerlordHardmode
             try
             {
                 AddModels(gameStarterObject as CampaignGameStarter);
+                AddBehaviors(gameStarterObject as CampaignGameStarter);
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error loading models for BannerlordHardmode:\n\n{ex.ToString()}");
             }
+        }
+
+        private void AddBehaviors(CampaignGameStarter gameStarter)
+        {
+            //gameStarter.AddBehavior(new HardmodeDesertionCampaignBehavior());
         }
 
         private void AddModels(CampaignGameStarter gameStarter)
@@ -57,7 +63,6 @@ namespace BannerlordHardmode
                 gameStarter.AddModel(new HardmodeDifficultyModel());
                 gameStarter.AddModel(new HardmodePartyMoraleModel());
                 gameStarter.AddModel(new HardmodeMobilePartyFoodConsumptionModel());
-                //gameStarter.AddModel(new HardmodePartyWageModel());
                 gameStarter.AddModel(new HardmodeClanFinanceModel());
             }
         }
