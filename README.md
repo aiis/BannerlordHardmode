@@ -8,6 +8,15 @@ This is a simple balancing mod intended to make the game Bannerlord more challen
 3. Drag contents to *YourMountAndBladeInstallation*/Modules folder
 4. Enable in launcher
 
+### Compatability
+So far none of the releases of this mod have required a new save game. And the save games work after disabling the mod. That said, it's always a good idea to back up save games if they are very important to you.
+Does this mod work with *some other mod*? It depends. If they try changing the same thing in the game, then chances are you will have issues.
+
+#### If you have problems launching, you can try unblocking the dll file of the mod.
+1. Navigate to *YourMountAndBladeInstallation*/Modules/zBannerlordHardmode/bin/Win64_Shipping_Client
+2. Right click BannerLordHardmode.dll and select properties
+3. At the very bottom of the window, check Unblock if it appears.
+
 ### Balance changes
 * Increased damage player takes (2x the dmg of default realistic setting)
 * Increased player's troops wages  (4x in party; 2x in garrison)
@@ -24,7 +33,4 @@ This is a simple balancing mod intended to make the game Bannerlord more challen
 * Player loses renown and influence when troops desert
 * Player loses renown and influence when captured
 
-#### If you have problems launching, you can try unblocking the dll file of the mod.
-1. Navigate to *YourMountAndBladeInstallation*/Modules/zBannerlordHardmode/bin/Win64_Shipping_Client
-2. Right click BannerLordHardmode.dll and select properties
-3. At the very bottom of the window, check Unblock if it appears.
+
