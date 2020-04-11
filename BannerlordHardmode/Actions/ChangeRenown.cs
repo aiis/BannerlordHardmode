@@ -1,13 +1,13 @@
 ﻿using System;
+using System.Reflection;
 using TaleWorlds.CampaignSystem;
-using TaleWorlds.Localization;
-using TaleWorlds.Core;
+using TaleWorlds.CampaignSystem.SandBox.CampaignBehaviors;
 
 namespace BannerlordHardmode.Actions
 {
     public static class ChangeRenown
     {
-        public static void Apply(Hero hero, float delta, float floor)
+        public static void Apply(Hero hero, float delta)
         {
             StatisticsDataLogHelper.AddLog(StatisticsDataLogHelper.LogAction.GainRenownAction);
 
@@ -15,28 +15,10 @@ namespace BannerlordHardmode.Actions
             if (delta >= 0.1f | delta <= -0.1f)
                 if (hero.Clan.Renown+delta > 0)
                 {
-                    if (hero.Clan.Renown + delta > floor)
-                    {
-                        hero.Clan.Renown += delta;
-                    } else
-                    {
-                        delta = hero.Clan.Renown - floor;
-                        hero.Clan.Renown = floor;
-                    }
-
-                    if (hero == Hero.MainHero)
-                    {
-                        // notify user of renown change
-                        if (delta > 0)
-                        {
-                            TextObject text = new TextObject($"{hero.Name} has gained {Convert.ToInt32(delta)} renown");
-                            InformationManager.AddQuickInformation(text);
-                        } else
-                        {
-                            TextObject text = new TextObject($"{hero.Name} has lost {Math.Abs(Convert.ToInt32(delta))} renown");
-                            InformationManager.AddQuickInformation(text);
-                        }
-                    }
+                    hero.Clan.Renown += delta;
+                    // notify user of renown change
+                    MethodInfo mOnRenownGained = typeof(DefaultNotificationsCampaignBehavior).GetMethod("OnRenownGained", BindingFlags.NonPublic | BindingFlags.Instance);
+                    mOnRenownGained.Invoke(Campaign.Current.GetCampaignBehavior<DefaultNotificationsCampaignBehavior>(), new object[3] { hero, Convert.ToInt32(delta), false });
 
                     // Change clan tier if needed
                     int tier = Campaign.Current.Models.ClanTierModel.CalculateTier(hero.Clan);

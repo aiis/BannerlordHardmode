@@ -90,6 +90,15 @@ namespace BannerlordHardmode
             return party.IsMainParty ? 25 : 10;
         }
 
+        public override float GetDefeatMoraleChange(PartyBase party)
+        {
+            if (party.MobileParty.IsMainParty)
+            {
+                return -30f;
+            }
+            return base.GetDefeatMoraleChange(party);
+        }
+
         public override float GetEffectivePartyMorale(MobileParty mobileParty, StatExplainer explanation = null)
         {
             ExplainedNumber explainedNumber;
