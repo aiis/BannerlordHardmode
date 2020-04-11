@@ -231,10 +231,16 @@ namespace BannerlordHardmode
             int num = mobileParty.GetTotalWage(1f, (StatExplainer)null);
             if (mobileParty.IsMainParty)
             {
-                num *= 5;
+                if (mobileParty.CurrentSettlement != null)
+                {
+                    num *= 2;
+                } else
+                {
+                    num *= 4;
+                }
             } else if (mobileParty.Party.Owner.Clan == Clan.PlayerClan && mobileParty.IsGarrison)
             {
-                num *= 3;
+                num *= 2;
             }
             if (mobileParty.IsGarrison)
                 num = (int)((double)num * 0.75);
