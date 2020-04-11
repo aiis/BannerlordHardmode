@@ -12,7 +12,6 @@ This is a simple balancing mod intended to make the game Bannerlord more challen
 * Increased damage player takes (2x the dmg of default realistic setting)
 * Increased player's troops wages  (4x in party; 2x in garrison)
 * Increased food consumption for player's party (2.5x)
-* Increased morale loss from defeats for player's party (-30 instead of -20)
 * Decreased base morale for player's party (30 instead of 50)
 * Increased threshold of troop desertion (25 instead of 10)
 * Reworked tax system (overall effect is town income is better than castle income which is better than village income)
