@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TaleWorlds.CampaignSystem.SandBox.GameComponents;
+﻿using TaleWorlds.CampaignSystem.SandBox.GameComponents;
 
 namespace BannerlordHardmode
 {
@@ -12,6 +7,16 @@ namespace BannerlordHardmode
         public override float GetDamageToPlayerMultiplier()
         {
             return 2f;
+        }
+
+        public override float GetDamageToFriendsMultiplier()
+        {
+            return 1f;
+        }
+
+        public override float GetPlayerTroopsReceivedDamageMultiplier()
+        {
+            return 1f;
         }
     }
 }

@@ -1,35 +1,84 @@
 ﻿using System;
-using System.Reflection;
 using TaleWorlds.Core;
 using TaleWorlds.CampaignSystem;
-using TaleWorlds.CampaignSystem.SandBox.CampaignBehaviors;
-using Helpers;
+using TaleWorlds.Localization;
 
 namespace BannerlordHardmode
 {
-    class HardmodeDesertionCampaignBehavior : DesertionCampaignBehavior
+    class HardmodeDesertionCampaignBehavior : CampaignBehaviorBase
     {
-        private int _numberOfDesertersFromLordParty;
-        public new void DailyTickParty(MobileParty mobileParty)
+        public override void RegisterEvents()
         {
+            CampaignEvents.DailyTickPartyEvent.AddNonSerializedListener((object)this, new Action<MobileParty>(this.DailyTick));
+        }
+
+        public override void SyncData(IDataStore dataStore)
+        {
+            return;
+        }
+
+        public void DailyTick(MobileParty mobileParty)
+        {   
             if (!Campaign.Current.DesertionEnabled || !mobileParty.IsActive || (mobileParty.IsDisbanding || mobileParty.Party.MapEvent != null) || !mobileParty.IsLordParty && (!mobileParty.IsGarrison || mobileParty.CurrentSettlement == null) && !mobileParty.IsCaravan)
                 return;
+            
+            // This party can have desertions, so figure out if it needs them and apply
             TroopRoster desertedTroopList = (TroopRoster)null;
             if (mobileParty.IsLordParty || mobileParty.IsCaravan)
-                this.PartiesCheckDesertionDueToMorale(mobileParty, ref desertedTroopList);
-            this.PartiesCheckDesertionDueToPartySizeExceedsPaymentRatio(mobileParty, ref desertedTroopList);
-            if (desertedTroopList != (TroopRoster)null && desertedTroopList.Count > 0)
+                this.CheckDesertionDueToMorale(mobileParty, ref desertedTroopList);
+            this.CheckDesertionDueToPartySizeExceedsPaymentRatio(mobileParty, ref desertedTroopList);
+
+            if (desertedTroopList != (TroopRoster)null && desertedTroopList.Count > 0 && mobileParty.IsMainParty)
             {
-                MethodInfo mOnTroopsDeserted = typeof(DefaultNotificationsCampaignBehavior).GetMethod("OnTroopsDeserted", BindingFlags.NonPublic | BindingFlags.Instance);
-                mOnTroopsDeserted.Invoke(CampaignEventDispatcher.Instance, new object[2] { mobileParty, desertedTroopList });
+                this.OnTroopsDeserted(mobileParty, desertedTroopList);
+                Actions.ChangeRenown.Apply(mobileParty.LeaderHero, -Convert.ToSingle(desertedTroopList.TotalManCount)*0.8f, Convert.ToSingle(Campaign.Current.Models.ClanTierModel.GetRequiredRenownForTier(mobileParty.LeaderHero.Clan.Tier))); // TODO test effects if applying to all parties
+                Actions.ChangeInfluence.Apply(mobileParty.LeaderHero, -Convert.ToSingle(desertedTroopList.TotalManCount * 2f));
             }
-            
+
+            // Remove party if all members have deserted
             if (mobileParty.Party.NumberOfAllMembers > 0)
                 return;
             mobileParty.RemoveParty();
         }
 
-        private void PartiesCheckDesertionDueToPartySizeExceedsPaymentRatio(MobileParty mobileParty, ref TroopRoster desertedTroopList)
+        private void OnTroopsDeserted(MobileParty mobileParty, TroopRoster desertedTroops)
+        {
+            if (mobileParty != MobileParty.MainParty && mobileParty.Party.Owner != Hero.MainHero)
+                return;
+            TextObject text = GameTexts.FindText("str_troops_deserting", (string)null);
+            text.SetTextVariable("PARTY", mobileParty.Name);
+            text.SetTextVariable("DESERTER_COUNT", desertedTroops.TotalManCount);
+            text.SetTextVariable("PLURAL", desertedTroops.TotalManCount == 1 ? 0 : 1);
+            InformationManager.AddQuickInformation(text, 0, (BasicCharacterObject)null, "");
+        }
+
+        public static void DesertTroopsFromParty(MobileParty party, int stackNo, int numberOfDeserters, ref TroopRoster desertedTroopList)
+        {
+            TroopRosterElement rosterSlot = party.MemberRoster.GetElementCopyAtIndex(stackNo);
+            party.MemberRoster.AddToCounts(rosterSlot.Character, -numberOfDeserters, false, 0, 0, true, -1);
+            if (desertedTroopList == (TroopRoster)null)
+                desertedTroopList = new TroopRoster();
+            desertedTroopList.AddToCounts(rosterSlot.Character, numberOfDeserters, false, 0, 0, true, -1);
+        }
+
+        private void CheckForTroopDesertionEffectiveMorale(MobileParty party, int stackNo, int desertIfMoraleIsLessThanValue, out int numberOfDeserters)
+        {
+            int regularDeserters = 0;
+            float morale = party.Morale;
+            if (party.IsActive && party.MemberRoster.Count > 0)
+            {
+                TroopRosterElement troopStack = party.MemberRoster.GetElementCopyAtIndex(stackNo);
+                double desertChance = Math.Pow((double)troopStack.Character.Level / 100.0, 0.100000001490116 * (((double)desertIfMoraleIsLessThanValue - (double)morale) / (double)desertIfMoraleIsLessThanValue));
+                for (int index = 0; index < troopStack.Number; ++index)
+                {
+                    if (desertChance < (double)MBRandom.RandomFloat)
+                        ++regularDeserters;
+                }
+            }
+            numberOfDeserters = regularDeserters;
+        }
+
+        private void CheckDesertionDueToPartySizeExceedsPaymentRatio(MobileParty mobileParty, ref TroopRoster desertedTroopList)
         {
             int partySizeLimit = mobileParty.Party.PartySizeLimit;
             if ((double)mobileParty.Party.NumberOfAllMembers / (double)partySizeLimit <= (double)mobileParty.PaymentRatio)
@@ -45,7 +94,7 @@ namespace BannerlordHardmode
                         num -= (float)mobileParty.MemberRoster.GetElementNumber(index2);
                         if ((double)num < 0.0)
                         {
-                            MobilePartyHelper.DesertTroopsFromParty(mobileParty, index2, 1, 0, ref desertedTroopList);
+                            DesertTroopsFromParty(mobileParty, index2, 1, ref desertedTroopList);
                             break;
                         }
                     }
@@ -53,58 +102,24 @@ namespace BannerlordHardmode
             }
         }
 
-        private bool PartiesCheckDesertionDueToMorale(MobileParty party, ref TroopRoster desertedTroopList)
+        private void CheckDesertionDueToMorale(MobileParty party, ref TroopRoster desertedTroopList)
         {
             int desertionThreshold = Campaign.Current.Models.PartyMoraleModel.GetTroopDesertionThreshold(party);
-            bool flag = false;
             if ((double)party.Morale < (double)desertionThreshold && party.Leader != null)
             {
-                for (int index = party.MemberRoster.Count - 1; index >= 0; --index)
+                for (int stackNo = 0; stackNo < party.MemberRoster.Count; stackNo++)
                 {
-                    if (!party.MemberRoster.GetCharacterAtIndex(index).IsHero)
+                    if (!party.MemberRoster.GetCharacterAtIndex(stackNo).IsHero)
                     {
                         int numberOfDeserters = 0;
-                        int numberOfWoundedDeserters = 0;
-                        this.PartiesCheckForTroopDesertionEffectiveMorale(party, index, desertionThreshold, out numberOfDeserters, out numberOfWoundedDeserters);
-                        if (numberOfDeserters + numberOfWoundedDeserters > 0)
+                        this.CheckForTroopDesertionEffectiveMorale(party, stackNo, desertionThreshold, out numberOfDeserters);
+                        if (numberOfDeserters > 0)
                         {
-                            if (party.IsLordParty && party.MapFaction.IsKingdomFaction)
-                                ++this._numberOfDesertersFromLordParty;
-                            flag = true;
-                            MobilePartyHelper.DesertTroopsFromParty(party, index, numberOfDeserters, numberOfWoundedDeserters, ref desertedTroopList);
-                            if (party.IsMainParty)
-                            {
-                                Actions.ChangeRenown.Apply(Hero.MainHero, -5f);
-                            }
+                            DesertTroopsFromParty(party, stackNo, numberOfDeserters, ref desertedTroopList);
                         }
                     }
                 }
             }
-            return flag;
-        }
-
-        private void PartiesCheckForTroopDesertionEffectiveMorale(MobileParty party, int stackNo, int desertIfMoraleIsLessThanValue, out int numberOfDeserters, out int numberOfWoundedDeserters)
-        {
-            int num1 = 0;
-            int num2 = 0;
-            float morale = party.Morale;
-            if (party.IsActive && party.MemberRoster.Count > 0)
-            {
-                TroopRosterElement elementCopyAtIndex = party.MemberRoster.GetElementCopyAtIndex(stackNo);
-                double num3 = Math.Pow((double)elementCopyAtIndex.Character.Level / 100.0, 0.100000001490116 * (((double)desertIfMoraleIsLessThanValue - (double)morale) / (double)desertIfMoraleIsLessThanValue));
-                for (int index = 0; index < elementCopyAtIndex.Number - elementCopyAtIndex.WoundedNumber; ++index)
-                {
-                    if (num3 < (double)MBRandom.RandomFloat)
-                        ++num1;
-                }
-                for (int index = 0; index < elementCopyAtIndex.WoundedNumber; ++index)
-                {
-                    if (num3 < (double)MBRandom.RandomFloat)
-                        ++num2;
-                }
-            }
-            numberOfDeserters = num1;
-            numberOfWoundedDeserters = num2;
         }
     }
 }
