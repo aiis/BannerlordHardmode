@@ -1,8 +1,11 @@
-﻿using TaleWorlds.MountAndBlade;
+﻿using System;
+using System.Windows.Forms;
+using TaleWorlds.MountAndBlade;
 using TaleWorlds.Core;
 using TaleWorlds.Library;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.CampaignSystem.SandBox.CampaignBehaviors;
+using HarmonyLib;
 
 namespace BannerlordHardmode
 {
@@ -12,6 +15,19 @@ namespace BannerlordHardmode
         {
             base.OnBeforeInitialModuleScreenSetAsRoot();
             InformationManager.DisplayMessage(new InformationMessage("Hardmode enabled", Color.White));
+        }
+
+        protected override void OnSubModuleLoad()
+        {
+            base.OnSubModuleLoad();
+            try
+            {
+                var harmony = new Harmony("mod.aiis.bannerlord.hardmode");
+                harmony.PatchAll();
+            } catch (Exception ex)
+            {
+                MessageBox.Show($"Error starting Bannerlord Hardmode:\n{ex.ToString()}");
+            }
         }
 
         protected override void OnGameStart(Game game, IGameStarter gameStarterObject)

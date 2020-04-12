@@ -228,23 +228,24 @@ namespace BannerlordHardmode
         {
             if (!mobileParty.IsActive || mobileParty.IsMilitia)
                 return 0;
-            int num = mobileParty.GetTotalWage(1f, (StatExplainer)null);
-            if (mobileParty.IsMainParty)
+            int wages = mobileParty.GetTotalWage(1f, (StatExplainer)null);
+            if (mobileParty.IsMainParty && mobileParty.CurrentSettlement != null)
             {
-                if (mobileParty.CurrentSettlement != null)
-                {
-                    num *= 2;
-                } else
-                {
-                    num *= 4;
-                }
+                // player in settlement should have 2x wages so bring it half down
+                wages /= 2;
             } else if (mobileParty.Party.Owner.Clan == Clan.PlayerClan && mobileParty.IsGarrison)
             {
-                num *= 2;
+                // player clan garrison has 2x wages so bring it half down
+                wages /= 2;
+            } else if (mobileParty.Party.Owner.Clan != Clan.PlayerClan)
+            {
+                // AI shouldn't have 4x wages so bring it back down
+                wages /= 4;
             }
             if (mobileParty.IsGarrison)
-                num = (int)((double)num * 0.75);
-            ExplainedNumber bonuses = new ExplainedNumber((float)num, (StringBuilder)null);
+                wages = (int)((double)wages * 0.75);
+            
+            ExplainedNumber bonuses = new ExplainedNumber((float)wages, (StringBuilder)null);
             if (mobileParty.CurrentSettlement != null && mobileParty.CurrentSettlement.IsTown)
                 PerkHelper.AddPerkBonusForTown(DefaultPerks.TwoHanded.ReducedWage, mobileParty.CurrentSettlement.Town, ref bonuses);
             if (mobileParty.IsCaravan && mobileParty.LeaderHero != null && (mobileParty.Party.Owner.Clan.Leader != null && mobileParty.Party.Owner.Clan.Leader.GetPerkValue(DefaultPerks.Trade.CaravanMaster)))

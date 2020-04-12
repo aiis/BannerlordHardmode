@@ -1,8 +1,5 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
 using TaleWorlds.CampaignSystem;
-using TaleWorlds.Localization;
-using TaleWorlds.Core;
 
 namespace BannerlordHardmode.Actions
 {
