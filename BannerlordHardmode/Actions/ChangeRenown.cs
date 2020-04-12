@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.Localization;
 using TaleWorlds.Core;
@@ -27,15 +28,8 @@ namespace BannerlordHardmode.Actions
                     if (hero == Hero.MainHero)
                     {
                         // notify user of renown change
-                        if (delta > 0)
-                        {
-                            TextObject text = new TextObject($"{hero.Name} has gained {Convert.ToInt32(delta)} renown");
-                            InformationManager.AddQuickInformation(text);
-                        } else
-                        {
-                            TextObject text = new TextObject($"{hero.Name} has lost {Math.Abs(Convert.ToInt32(delta))} renown");
-                            InformationManager.AddQuickInformation(text);
-                        }
+                        MethodInfo mAddInformationData = typeof(CampaignInformationManager).GetMethod("AddInformationData", BindingFlags.NonPublic | BindingFlags.Instance);
+                        mAddInformationData.Invoke(Campaign.Current.CampaignInformationManager, new object[1] { new LogEntries.PlayerClanStatChangeLogEntry("renown", delta) });
                     }
 
                     // Change clan tier if needed

@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Reflection;
 using TaleWorlds.Core;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.Localization;
+using TaleWorlds.CampaignSystem.ViewModelCollection.Map;
 
 namespace BannerlordHardmode
 {
@@ -30,7 +32,11 @@ namespace BannerlordHardmode
 
             if (desertedTroopList != (TroopRoster)null && desertedTroopList.Count > 0 && mobileParty.IsMainParty)
             {
-                this.OnTroopsDeserted(mobileParty, desertedTroopList);
+                // Show desertions in log
+                MethodInfo mAddInformationData = typeof(CampaignInformationManager).GetMethod("AddInformationData", BindingFlags.NonPublic | BindingFlags.Instance);
+                mAddInformationData.Invoke(Campaign.Current.CampaignInformationManager, new object[1] { new LogEntries.DesertionLogEntry(Hero.MainHero, desertedTroopList.TotalManCount) });
+                
+                // Apply penalties to clan (notification handled on action level)
                 Actions.ChangeRenown.Apply(mobileParty.LeaderHero, -Convert.ToSingle(desertedTroopList.TotalManCount)*0.8f, Convert.ToSingle(Campaign.Current.Models.ClanTierModel.GetRequiredRenownForTier(mobileParty.LeaderHero.Clan.Tier))); // TODO test effects if applying to all parties
                 Actions.ChangeInfluence.Apply(mobileParty.LeaderHero, -Convert.ToSingle(desertedTroopList.TotalManCount * 2f));
             }
@@ -39,17 +45,6 @@ namespace BannerlordHardmode
             if (mobileParty.Party.NumberOfAllMembers > 0)
                 return;
             mobileParty.RemoveParty();
-        }
-
-        private void OnTroopsDeserted(MobileParty mobileParty, TroopRoster desertedTroops)
-        {
-            if (mobileParty != MobileParty.MainParty && mobileParty.Party.Owner != Hero.MainHero)
-                return;
-            TextObject text = GameTexts.FindText("str_troops_deserting", (string)null);
-            text.SetTextVariable("PARTY", mobileParty.Name);
-            text.SetTextVariable("DESERTER_COUNT", desertedTroops.TotalManCount);
-            text.SetTextVariable("PLURAL", desertedTroops.TotalManCount == 1 ? 0 : 1);
-            InformationManager.AddQuickInformation(text, 0, (BasicCharacterObject)null, "");
         }
 
         public static void DesertTroopsFromParty(MobileParty party, int stackNo, int numberOfDeserters, ref TroopRoster desertedTroopList)

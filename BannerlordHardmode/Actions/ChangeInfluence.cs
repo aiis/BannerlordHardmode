@@ -1,7 +1,5 @@
-﻿using System;
+﻿using System.Reflection;
 using TaleWorlds.CampaignSystem;
-using TaleWorlds.Localization;
-using TaleWorlds.Core;
 
 namespace BannerlordHardmode.Actions
 {
@@ -15,8 +13,8 @@ namespace BannerlordHardmode.Actions
             if (hero == Hero.MainHero)
             {
                 // notify user
-                TextObject text = new TextObject($"{hero.Name}'s influence has changed from {Convert.ToInt32(oldInfluence)} to {Convert.ToInt32(hero.Clan.Influence)}");
-                InformationManager.AddQuickInformation(text);
+                MethodInfo mAddInformationData = typeof(CampaignInformationManager).GetMethod("AddInformationData", BindingFlags.NonPublic | BindingFlags.Instance);
+                mAddInformationData.Invoke(Campaign.Current.CampaignInformationManager, new object[1] { new LogEntries.PlayerClanStatChangeLogEntry("influence", delta) });
             }
         }
     }
