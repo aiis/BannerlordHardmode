@@ -40,7 +40,7 @@ namespace BannerlordHardmode.LogEntries
         public TextObject GetNotificationText()
         {
             String verb = this._delta > 0 ? "gained" : "lost";
-            TextObject text = new TextObject($"Your clan has {verb} {this._delta.ToString()} {this._name}");
+            TextObject text = new TextObject($"Your clan has {verb} {Math.Abs(this._delta).ToString()} {this._name}");
             return text;
         }
     }

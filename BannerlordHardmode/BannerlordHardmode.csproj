@@ -122,11 +122,13 @@
     <Compile Include="HardmodeDesertionCampaignBehavior.cs" />
     <Compile Include="HardmodeDifficultyModel.cs" />
     <Compile Include="HardmodeMobilePartyFoodConsumptionModel.cs" />
+    <Compile Include="HardmodePartyHealingModel.cs" />
     <Compile Include="HardmodePartyMoraleModel.cs" />
     <Compile Include="HardmodePlayerCaptivityModel.cs" />
     <Compile Include="LogEntries\DesertionLogEntry.cs" />
     <Compile Include="LogEntries\PlayerClanStatChangeLogEntry.cs" />
     <Compile Include="Patches\Objects\HardmodeCharacter.cs" />
+    <Compile Include="Patches\Objects\MobilePartyPatch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Submodule.cs" />
   </ItemGroup>
