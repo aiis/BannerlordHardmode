@@ -1,9 +1,9 @@
 # A Simple Hardmode for Bannerlord
 
-This is a simple balancing mod intended to make the game Bannerlord more challenging and provide some strategic depth to the game.
+This is a simple mod intended to make the game Bannerlord more challenging and provide a bit more strategic depth to the game. The goal isn't difficulty for the sake of difficulty. The goal is to make constantly roaming the countryside with an elite army, kicking everyone's ass without a worry in the world, difficult.
 
 ### Installation
-1. Download zBannerlordHardmode.zip from [**Releases**](https://github.com/aiis/BannerlordHardmode/releases)
+1. Download zBannerlordHardmode.zip from [**RELEASES**](https://github.com/aiis/BannerlordHardmode/releases)
 2. Unzip file
 3. Drag contents to *YourMountAndBladeInstallation*/Modules folder
 4. Enable in launcher
@@ -17,7 +17,17 @@ Does this mod work with *some other mod*? It depends. If they try changing the s
 2. Right click BannerLordHardmode.dll and select properties
 3. At the very bottom of the window, check Unblock if it appears.
 
-### Balance changes
+### New mechanics added by this mod
+* Health doesn't recover while traveling, recovers slowly while not traveling, and recovers quickly in settlements 
+* Morale recovers from negative morale to base morale more quickly while waiting in a settlement
+* Party morale, when below base morale, increases at a higher rate while waiting in a settlement
+* Party morale, when above base morale, decays at a lower rate while waiting in a settlement
+* Halved food consumption for player's party when in a settlement
+* Halved party wages while waiting in a settlement
+* Player loses renown and influence when troops desert
+* Player loses renown and influence when captured
+
+### Balance changes this mod brings to the game
 * Increased damage player takes (2x the dmg of default realistic setting)
 * Increased player's troops wages  (4x in party; 2x in garrison)
 * Increased food consumption for player's party (2.5x)
@@ -25,12 +35,4 @@ Does this mod work with *some other mod*? It depends. If they try changing the s
 * Increased threshold of troop desertion (25 instead of 10)
 * Reworked tax system (overall effect is town income is better than castle income which is better than village income)
 * Workshop income decreased (0.6x)
-* Larger bandit parties
-
-### New mechanics
-* Halved food consumption for player's party when in a village, castle or town
-* Halved party wages while waiting in a town
-* Player loses renown and influence when troops desert
-* Player loses renown and influence when captured
-
-
+* Larger bandit parties and harder compositions
