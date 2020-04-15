@@ -13,7 +13,28 @@ namespace BannerlordHardmode.Patches.Objects
     {
         static void Postfix(MobileParty __instance)
         {
-            if (__instance.CurrentSettlement != null && __instance.IsActive && !__instance.Party.IsStarving)
+            if (__instance.IsMainParty)
+            {
+                if ((__instance.CurrentSettlement != null | __instance.LastVisitedSettlement.GetTrackDistanceToMainAgent() <= 2.0f) && !__instance.Party.IsStarving)
+                {
+                    if (__instance.RecentEventsMorale < 0)
+                    {
+                        // if party morale is below base, double recovery (normally recovers 10%)
+                        __instance.RecentEventsMorale -= (__instance.RecentEventsMorale / 0.9f) * 0.2f;
+                    }
+                    else if (__instance.RecentEventsMorale > 0)
+                    {
+                        // if party morale is above base, half the amount the game normally takes (normally takes 10%)
+                        __instance.RecentEventsMorale = __instance.RecentEventsMorale / 0.95f;
+                    }
+
+                }
+                else if (__instance.Party.IsStarving)
+                {
+                    __instance.RecentEventsMorale = __instance.RecentEventsMorale / 0.9f;
+                }
+            }
+            else if (__instance.CurrentSettlement != null && __instance.IsActive && !__instance.Party.IsStarving)
             {
                 if (__instance.RecentEventsMorale < 0)
                 {
@@ -25,9 +46,6 @@ namespace BannerlordHardmode.Patches.Objects
                     __instance.RecentEventsMorale = __instance.RecentEventsMorale / 0.95f;
                 }
                 
-            } else if (__instance.IsMainParty && __instance.Party.IsStarving)
-            {
-                __instance.RecentEventsMorale = __instance.RecentEventsMorale / 0.9f;
             }
         }
     }

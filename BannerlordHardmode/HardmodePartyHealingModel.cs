@@ -17,7 +17,7 @@ namespace BannerlordHardmode
                 if (party.IsMoving | party.Party.IsStarving)
                 {
                     return 0.0f;
-                } else if (party.CurrentSettlement != null)
+                } else if (party.CurrentSettlement != null | party.LastVisitedSettlement.GetTrackDistanceToMainAgent() <= 2.0f)
                 {
                     // Don't like getting a stacktrace here but it's a hacky fix for now to keep from healing when tooltip calls this method
                     MethodBase mth = new StackTrace().GetFrame(1).GetMethod();
