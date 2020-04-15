@@ -17,20 +17,20 @@ Does this mod work with *some other mod*? It depends. If they try changing the s
 2. Right click BannerLordHardmode.dll and select properties
 3. At the very bottom of the window, check Unblock if it appears.
 
-### New mechanics added by this mod
-* **Variable health recovery for player and troops**
+## New mechanics added by this mod
+* Variable health recovery for player and troops
     - No healing occurs while traveling
     - Recover slowly while waiting in the countryside
     - Recover rapidly while waiting in settlements
-* **Variable morale recovery**
+* Variable morale recovery
     - Recover from negative morale more quickly in settlements
     - High morale decays at a reduced rate while waiting in settlements
-* **Variable food consumption - party's food consumption halved while waiting in settlements**
-* **Variable party wages - party's wages are halved while waiting in settlements**
-* **Player loses renown and influence when troops desert**
-* **Player loses renown and influence when captured**
+* Variable food consumption - party's food consumption halved while waiting in settlements
+* Variable party wages - party's wages are halved while waiting in settlements
+* Player loses renown and influence when troops desert
+* Player loses renown and influence when captured
 
-### Balance changes this mod brings to the game
+## Balance changes this mod brings to the game
 * Increased damage player takes (2x the dmg of default realistic setting)
 * Increased player's troops wages  (4x in party; 2x in garrison)
 * Increased base food consumption for player's party (2.5x)
