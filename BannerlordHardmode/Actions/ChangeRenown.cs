@@ -24,9 +24,7 @@ namespace BannerlordHardmode.Actions
 
                     if (hero == Hero.MainHero)
                     {
-                        // notify user of renown change
-                        MethodInfo mAddInformationData = typeof(CampaignInformationManager).GetMethod("AddInformationData", BindingFlags.NonPublic | BindingFlags.Instance);
-                        mAddInformationData.Invoke(Campaign.Current.CampaignInformationManager, new object[1] { new LogEntries.PlayerClanStatChangeLogEntry("renown", delta) });
+                        GUI.Notifications.ClanStatChanged.Show("renown", delta);
                     }
 
                     // Change clan tier if needed

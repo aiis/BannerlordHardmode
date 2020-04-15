@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Reflection;
 using TaleWorlds.Core;
 using TaleWorlds.CampaignSystem;
-using TaleWorlds.Localization;
-using TaleWorlds.CampaignSystem.ViewModelCollection.Map;
 
 namespace BannerlordHardmode
 {
@@ -32,10 +29,7 @@ namespace BannerlordHardmode
 
             if (desertedTroopList != (TroopRoster)null && desertedTroopList.Count > 0 && mobileParty.IsMainParty)
             {
-                // Show desertions in log
-                MethodInfo mAddInformationData = typeof(CampaignInformationManager).GetMethod("AddInformationData", BindingFlags.NonPublic | BindingFlags.Instance);
-                mAddInformationData.Invoke(Campaign.Current.CampaignInformationManager, new object[1] { new LogEntries.DesertionLogEntry(Hero.MainHero, desertedTroopList.TotalManCount) });
-                
+                GUI.Notifications.Desertion.Show(Hero.MainHero, desertedTroopList.TotalManCount);   
                 // Apply penalties to clan (notification handled on action level)
                 Actions.ChangeRenown.Apply(mobileParty.LeaderHero, -Convert.ToSingle(desertedTroopList.TotalManCount)*0.8f, Convert.ToSingle(Campaign.Current.Models.ClanTierModel.GetRequiredRenownForTier(mobileParty.LeaderHero.Clan.Tier))); // TODO test effects if applying to all parties
                 Actions.ChangeInfluence.Apply(mobileParty.LeaderHero, -Convert.ToSingle(desertedTroopList.TotalManCount * 2f));

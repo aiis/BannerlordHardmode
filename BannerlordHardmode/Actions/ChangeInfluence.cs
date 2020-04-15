@@ -13,8 +13,7 @@ namespace BannerlordHardmode.Actions
             if (hero == Hero.MainHero)
             {
                 // notify user
-                MethodInfo mAddInformationData = typeof(CampaignInformationManager).GetMethod("AddInformationData", BindingFlags.NonPublic | BindingFlags.Instance);
-                mAddInformationData.Invoke(Campaign.Current.CampaignInformationManager, new object[1] { new LogEntries.PlayerClanStatChangeLogEntry("influence", delta) });
+                GUI.Notifications.ClanStatChanged.Show("influence", delta);
             }
         }
     }

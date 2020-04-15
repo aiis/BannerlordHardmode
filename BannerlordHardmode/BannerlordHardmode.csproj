@@ -118,6 +118,8 @@
     <Compile Include="Actions\ChangeRenown.cs" />
     <Compile Include="GUI\HardmodeGauntletMapCampaignOptions.cs" />
     <Compile Include="GUI\HardmodeOptionsVM.cs" />
+    <Compile Include="GUI\Notifications\ClanStatChanged.cs" />
+    <Compile Include="GUI\Notifications\Desertion.cs" />
     <Compile Include="HardmodeClanFinanceModel.cs" />
     <Compile Include="HardmodeDesertionCampaignBehavior.cs" />
     <Compile Include="HardmodeDifficultyModel.cs" />
@@ -125,8 +127,6 @@
     <Compile Include="HardmodePartyHealingModel.cs" />
     <Compile Include="HardmodePartyMoraleModel.cs" />
     <Compile Include="HardmodePlayerCaptivityModel.cs" />
-    <Compile Include="LogEntries\DesertionLogEntry.cs" />
-    <Compile Include="LogEntries\PlayerClanStatChangeLogEntry.cs" />
     <Compile Include="Patches\Objects\HardmodeCharacter.cs" />
     <Compile Include="Patches\Objects\MobilePartyPatch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
