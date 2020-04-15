@@ -18,21 +18,24 @@ Does this mod work with *some other mod*? It depends. If they try changing the s
 3. At the very bottom of the window, check Unblock if it appears.
 
 ### New mechanics added by this mod
-* Health doesn't recover while traveling, recovers slowly while not traveling, and recovers quickly in settlements 
-* Morale recovers from negative morale to base morale more quickly while waiting in a settlement
-* Party morale, when below base morale, increases at a higher rate while waiting in a settlement
-* Party morale, when above base morale, decays at a lower rate while waiting in a settlement
-* Halved food consumption for player's party when in a settlement
-* Halved party wages while waiting in a settlement
-* Player loses renown and influence when troops desert
-* Player loses renown and influence when captured
+* **Variable health recovery for player and troops**
+    - No healing occurs while traveling
+    - Recover slowly while waiting in the countryside
+    - Recover rapidly while waiting in settlements
+* **Variable morale recovery**
+    - Recover from negative morale more quickly in settlements
+    - High morale decays at a reduced rate while waiting in settlements
+* **Variable food consumption - party's food consumption halved while waiting in settlements**
+* **Variable party wages - party's wages are halved while waiting in settlements**
+* **Player loses renown and influence when troops desert**
+* **Player loses renown and influence when captured**
 
 ### Balance changes this mod brings to the game
 * Increased damage player takes (2x the dmg of default realistic setting)
 * Increased player's troops wages  (4x in party; 2x in garrison)
-* Increased food consumption for player's party (2.5x)
+* Increased base food consumption for player's party (2.5x)
 * Decreased base morale for player's party (30 instead of 50)
-* Increased threshold of troop desertion (25 instead of 10)
+* Increased threshold of troop desertion (they desert at 25 morale instead of 10)
 * Reworked tax system (overall effect is town income is better than castle income which is better than village income)
 * Workshop income decreased (0.6x)
 * Larger bandit parties and harder compositions
