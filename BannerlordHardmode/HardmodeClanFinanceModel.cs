@@ -229,7 +229,7 @@ namespace BannerlordHardmode
             if (!mobileParty.IsActive || mobileParty.IsMilitia)
                 return 0;
             int wages = mobileParty.GetTotalWage(1f, (StatExplainer)null);
-            if (mobileParty.IsMainParty && mobileParty.CurrentSettlement != null)
+            if (mobileParty.IsMainParty && (mobileParty.CurrentSettlement != null | mobileParty.LastVisitedSettlement.GetTrackDistanceToMainAgent() <= 2.0f))
             {
                 // player in settlement should have 2x wages so bring it half down
                 wages /= 2;
