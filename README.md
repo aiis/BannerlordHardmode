@@ -10,7 +10,9 @@ This is a simple mod intended to make the game Bannerlord more challenging and p
 
 ### Compatability
 Compatabile up to game version 1.1.0
+
 So far none of the releases of this mod have required a new save game. And the save games work after disabling the mod. That said, it's always a good idea to back up save games if they are very important to you.
+
 Does this mod work with *some other mod*? It depends. If they try changing the same thing in the game, then chances are you will have issues.
 
 #### If you have problems launching, you can try unblocking the dll file of the mod.
